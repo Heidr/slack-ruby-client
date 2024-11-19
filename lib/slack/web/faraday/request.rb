@@ -36,7 +36,7 @@ module Slack
           end
           response.body
         rescue ::Faraday::ParsingError => e
-          raise Slack::Web::Api::Errors::ParsingError, e.response
+          raise Slack::Web::Api::Errors::ParsingError, e.response unless /^OK - \d+/.match?(e.response&.body)
         end
       end
     end

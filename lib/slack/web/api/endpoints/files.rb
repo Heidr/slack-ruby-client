@@ -69,7 +69,22 @@ module Slack
           def files_getUploadURLExternal(options = {})
             raise ArgumentError, 'Required arguments :filename missing' if options[:filename].nil?
             raise ArgumentError, 'Required arguments :length missing' if options[:length].nil?
-            post('files.getUploadURLExternal', options)
+            get('files.getUploadURLExternal', options)
+          end
+
+          #
+          # Uploads the file to URL returned by #files_getUploadURLExternal
+          #
+          # @option options [string] :upload_url
+          #   URL returned by #files_getUploadURLExternal
+          # @option options [file] :file
+          #   File contents via multipart/form-data.
+          # @see https://api.slack.com/methods/files.getUploadURLExternal
+          def files_postUploadURL(options = {})
+            raise ArgumentError, 'Required arguments :upload_url missing' if options[:upload_url].nil?
+            raise ArgumentError, 'Required arguments :file missing' if options[:file].nil?
+
+            post(options[:upload_url], options)
           end
 
           #
